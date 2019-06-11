@@ -15,8 +15,6 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 
 app.use(express.static(publicDirectoryPath))
 
-let count = 0
-
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
@@ -55,7 +53,7 @@ io.on('connection', (socket) => {
     socket.on('sendLocation', (coords, callback) => {
         const user = getUser(socket.id)
 
-        io.to(user.room).emit('locationMessage', generateLocationMessage(user.username,`https:google.com/maps?q=${coords.lat},${coords.long}`))
+        io.to(user.room).emit('locationMessage', generateLocationMessage(user.username,`https://google.com/maps?q=${coords.lat},${coords.long}`))
         callback()
     })
 
@@ -70,7 +68,6 @@ io.on('connection', (socket) => {
             room: user.room,
             users: getUsersInRoom(user.room)
         })
-        
     })
 })
 
